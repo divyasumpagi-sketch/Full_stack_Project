@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Home - FullStack Pro{% endblock %}
+
+{% block content %}
+
+<!-- ========== HERO SECTION ========== -->
+<section class="hero">
+  <h1>Welcome to <span>StudyFlow</span> 🚀</h1>
+  <p><b>StudyFlow</b> is a simple full-stack web app that helps manage students, tasks, and daily academic activities in one place. Built with Flask, SQLite, HTML, CSS, and JavaScript, it provides login, CRUD operations, task tracking, and a calculator.
+</p>
+  <div class="hero-btns">
+    {% if session.get('user_id') %}
+      <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Go to Dashboard →</a>
+    {% else %}
+      <a href="{{ url_for('register') }}" class="btn btn-secondary">Get Started</a>
+      <a href="{{ url_for('login') }}"    class="btn btn-outline"   style="color:#fff;border-color:#fff;">Login</a>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ========== FEATURES SECTION ========== -->
+<section class="features">
+  <h2>What's Inside This Project?</h2>
+  <p class="subtitle">Everything you need to demonstrate your Full Stack skills</p>
+
+  <div class="cards-grid">
+
+    <!-- Card 1: Authentication — goes to Register if not logged in, Dashboard if logged in -->
+    <a href="{{ url_for('register') if not session.get('user_id') else url_for('dashboard') }}" class="card card-link">
+      <div class="card-icon">🔐</div>
+      <h3>Authentication</h3>
+      <p>Register and login system with session management and form validation.</p>
+      <span class="card-cta">{{ 'Register Now →' if not session.get('user_id') else 'Go to Dashboard →' }}</span>
+    </a>
+
+    <!-- Card 2: Database — goes to Students table (shows DB in action) -->
+    <a href="{{ url_for('students') if session.get('user_id') else url_for('login') }}" class="card card-link">
+      <div class="card-icon">🗄️</div>
+      <h3>Database</h3>
+      <p>SQLite database with Users, Students, and Tasks tables using CRUD operations.</p>
+      <span class="card-cta">View Records →</span>
+    </a>
+
+    <!-- Card 3: Student Manager — goes to students page -->
+    <a href="{{ url_for('students') if session.get('user_id') else url_for('login') }}" class="card card-link">
+      <div class="card-icon">🎓</div>
+      <h3>Student Manager</h3>
+      <p>Add, View, Edit, Delete student records with marks and course details.</p>
+      <span class="card-cta">Manage Students →</span>
+    </a>
+
+    <!-- Card 4: Task Manager — goes to tasks page -->
+    <a href="{{ url_for('tasks') if session.get('user_id') else url_for('login') }}" class="card card-link">
+      <div class="card-icon">✅</div>
+      <h3>Task Manager</h3>
+      <p>Personal task tracker with status updates — Pending, In Progress, Completed.</p>
+      <span class="card-cta">View Tasks →</span>
+    </a>
+
+    <!-- Card 5: Responsive Design — goes to contact page (demo of responsive form) -->
+    <a href="{{ url_for('contact') }}" class="card card-link">
+      <div class="card-icon">📱</div>
+      <h3>Responsive Design</h3>
+      <p>Fully mobile-friendly layout using pure CSS with no external frameworks.</p>
+      <span class="card-cta">Try Contact Form →</span>
+    </a>
+
+    <!-- Card 6: Flask Backend -->
+    <a href="{{ url_for('dashboard') if session.get('user_id') else url_for('register') }}" class="card card-link">
+      <div class="card-icon">⚡</div>
+      <h3>Flask Backend</h3>
+      <p>Clean Python Flask routing with template rendering and flash messages.</p>
+      <span class="card-cta">{{ 'Open Dashboard →' if session.get('user_id') else 'Get Started →' }}</span>
+    </a>
+
+    <!-- Card 7: Calculator -->
+    <a href="{{ url_for('calculator') }}" class="card card-link">
+      <div class="card-icon">🧮</div>
+      <h3>Arithmetic Calculator</h3>
+      <p>Perform addition, subtraction, multiplication, division, modulus and power operations.</p>
+      <span class="card-cta">Open Calculator →</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ========== TECH STACK SECTION ========== -->
+<section style="background: #1e1b4b; padding: 3rem 2rem; text-align:center; color:white;">
+  <h2 style="margin-bottom:1.5rem; font-size:1.8rem;">Tech Stack Used</h2>
+  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem;">
+    {% for tech in [('🐍', 'Python'), ('🌶️', 'Flask'), ('🗃️', 'SQLite'), ('🌐', 'HTML5'), ('🎨', 'CSS3'), ('⚙️', 'JavaScript')] %}
+    <div style="background:rgba(255,255,255,0.1); border-radius:12px; padding:1rem 1.5rem; min-width:100px;">
+      <div style="font-size:2rem;">{{ tech[0] }}</div>
+      <div style="margin-top:0.4rem; font-weight:600; font-size:0.9rem;">{{ tech[1] }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}

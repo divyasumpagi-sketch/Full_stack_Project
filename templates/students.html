@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Students - FullStack Pro{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>🎓 Student Records</h1>
+  <p>View and manage all student data</p>
+</div>
+
+<div class="table-section">
+  <div class="table-header">
+    <h2>All Students ({{ students|length }} records)</h2>
+    <a href="{{ url_for('add_student') }}" class="btn btn-success">➕ Add New Student</a>
+  </div>
+
+  <div class="table-wrapper">
+    {% if students %}
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Course</th>
+          <th>Marks</th>
+          <th>Grade</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in students %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td><strong>{{ s.name }}</strong></td>
+          <td>{{ s.email }}</td>
+          <td>{{ s.course }}</td>
+          <td>{{ s.marks }}/100</td>
+          <td>
+            {% if s.marks >= 75 %}
+              <span class="badge badge-success">A Grade</span>
+            {% elif s.marks >= 50 %}
+              <span class="badge badge-warning">B Grade</span>
+            {% else %}
+              <span class="badge badge-danger">C Grade</span>
+            {% endif %}
+          </td>
+          <td>
+            <div class="action-btns">
+              <a href="{{ url_for('edit_student', id=s.id) }}"
+                 class="btn btn-warning btn-sm">✏️ Edit</a>
+              <a href="{{ url_for('delete_student', id=s.id) }}"
+                 class="btn btn-danger btn-sm btn-delete">🗑️ Delete</a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">🎓</div>
+      <p>No student records yet. <a href="{{ url_for('add_student') }}">Add the first one!</a></p>
+    </div>
+    {% endif %}
+  </div>
+
+  <div style="margin-top:1rem;">
+    <a href="{{ url_for('dashboard') }}" class="btn btn-outline">← Back to Dashboard</a>
+  </div>
+</div>
+
+{% endblock %}

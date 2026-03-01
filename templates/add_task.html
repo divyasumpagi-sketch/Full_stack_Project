@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Add Task - FullStack Pro{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>➕ Add New Task</h1>
+  <p>Create a new task to track your work</p>
+</div>
+
+<div class="form-container">
+  <h2>Task Details</h2>
+  <p class="form-subtitle">Fill in your task information below</p>
+
+  <form method="POST" action="{{ url_for('add_task') }}">
+
+    <div class="form-group">
+      <label for="title">Task Title</label>
+      <input type="text" id="title" name="title"
+             placeholder="e.g. Complete Flask backend" required />
+      <span class="error-msg">Title is required.</span>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description (optional)</label>
+      <textarea id="description" name="description" rows="3"
+                placeholder="Brief description of the task..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select id="status" name="status">
+        <option value="Pending">⏳ Pending</option>
+        <option value="In Progress">🔄 In Progress</option>
+        <option value="Completed">✅ Completed</option>
+      </select>
+    </div>
+
+    <div style="display:flex; gap:1rem; margin-top:0.5rem;">
+      <button type="submit" class="btn btn-success" style="flex:1;">Add Task ✅</button>
+      <a href="{{ url_for('tasks') }}" class="btn btn-outline" style="flex:1; text-align:center; padding-top:0.65rem;">Cancel</a>
+    </div>
+
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - FullStack Pro{% endblock %}
+
+{% block content %}
+
+<div class="dashboard">
+  <h1>👋 Welcome, {{ session.user_name }}!</h1>
+  <p class="welcome-sub">Here's a summary of your data. Use the links below to manage records.</p>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">👥</div>
+      <div class="stat-number">{{ user_count }}</div>
+      <div class="stat-label">Registered Users</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🎓</div>
+      <div class="stat-number">{{ student_count }}</div>
+      <div class="stat-label">Student Records</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">✅</div>
+      <div class="stat-number">{{ task_count }}</div>
+      <div class="stat-label">Your Tasks</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📧</div>
+      <div class="stat-number" style="font-size:1rem; padding-top:0.5rem;">{{ session.user_email }}</div>
+      <div class="stat-label">Logged in as</div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <h3>⚡ Quick Actions</h3>
+    <div class="action-buttons">
+      <a href="{{ url_for('students') }}"   class="btn btn-primary">🎓 Manage Students</a>
+      <a href="{{ url_for('add_student') }}" class="btn btn-success">➕ Add Student</a>
+      <a href="{{ url_for('tasks') }}"      class="btn btn-secondary">✅ My Tasks</a>
+      <a href="{{ url_for('add_task') }}"   class="btn btn-warning">➕ Add Task</a>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

@@ -69,9 +69,6 @@
 
         <button type="submit" class="op-btn {% if op_val=='modulus' %}op-active{% endif %}"
                 onclick="setOp('modulus', '%')">% Modulus</button>
-
-        <button type="submit" class="op-btn {% if op_val=='power' %}op-active{% endif %}"
-                onclick="setOp('power', '^')">x^y Power</button>
       </div>
 
       <a href="{{ url_for('calculator') }}"

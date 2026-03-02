@@ -148,6 +148,22 @@ a { text-decoration: none; color: inherit; }
 .card:hover {
   transform: translateY(-3px);
 }
+/* CENTER CONTAINER ONLY */
+.contact-section,
+.form-container,
+.calc-wrapper {
+  max-width: 700px;
+  margin: 2rem auto;   /* centers container */
+}
+
+/* KEEP TEXT NORMAL */
+.contact-section {
+  text-align: left;
+}
+
+.form-container {
+  margin: 0 auto;
+}
 
 /* FORMS */
 .form-container {

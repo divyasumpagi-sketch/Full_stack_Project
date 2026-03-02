@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Home - FullStack Pro{% endblock %}
+{% block title %}Home - StudyFlow{% endblock %}
 
 {% block content %}
 
@@ -21,8 +21,6 @@
 <!-- ========== FEATURES SECTION ========== -->
 <section class="features">
   <h2>What's Inside This Project?</h2>
-  <p class="subtitle">Everything you need to demonstrate your Full Stack skills</p>
-
   <div class="cards-grid">
 
     <!-- Card 1: Authentication — goes to Register if not logged in, Dashboard if logged in -->
@@ -30,7 +28,7 @@
       <div class="card-icon">🔐</div>
       <h3>Authentication</h3>
       <p>Register and login system with session management and form validation.</p>
-      <span class="card-cta">{{ 'Register Now →' if not session.get('user_id') else 'Go to Dashboard →' }}</span>
+      <span class="card-cta">{{ 'Register Now ->' if not session.get('user_id') else 'Go to Dashboard ->' }}</span>
     </a>
 
     <!-- Card 2: Database — goes to Students table (shows DB in action) -->
@@ -38,7 +36,7 @@
       <div class="card-icon">🗄️</div>
       <h3>Database</h3>
       <p>SQLite database with Users, Students, and Tasks tables using CRUD operations.</p>
-      <span class="card-cta">View Records →</span>
+      <span class="card-cta">View Records -></span>
     </a>
 
     <!-- Card 3: Student Manager — goes to students page -->
@@ -46,7 +44,7 @@
       <div class="card-icon">🎓</div>
       <h3>Student Manager</h3>
       <p>Add, View, Edit, Delete student records with marks and course details.</p>
-      <span class="card-cta">Manage Students →</span>
+      <span class="card-cta">Manage Students -></span>
     </a>
 
     <!-- Card 4: Task Manager — goes to tasks page -->
@@ -54,7 +52,7 @@
       <div class="card-icon">✅</div>
       <h3>Task Manager</h3>
       <p>Personal task tracker with status updates — Pending, In Progress, Completed.</p>
-      <span class="card-cta">View Tasks →</span>
+      <span class="card-cta">View Tasks -></span>
     </a>
 
     <!-- Card 5: Responsive Design — goes to contact page (demo of responsive form) -->
@@ -62,7 +60,7 @@
       <div class="card-icon">📱</div>
       <h3>Responsive Design</h3>
       <p>Fully mobile-friendly layout using pure CSS with no external frameworks.</p>
-      <span class="card-cta">Try Contact Form →</span>
+      <span class="card-cta">Try Contact Form -></span>
     </a>
 
     <!-- Card 6: Flask Backend -->
@@ -70,7 +68,7 @@
       <div class="card-icon">⚡</div>
       <h3>Flask Backend</h3>
       <p>Clean Python Flask routing with template rendering and flash messages.</p>
-      <span class="card-cta">{{ 'Open Dashboard →' if session.get('user_id') else 'Get Started →' }}</span>
+      <span class="card-cta">{{ 'Open Dashboard ->' if session.get('user_id') else 'Get Started ->' }}</span>
     </a>
 
     <!-- Card 7: Calculator -->
@@ -78,7 +76,7 @@
       <div class="card-icon">🧮</div>
       <h3>Arithmetic Calculator</h3>
       <p>Perform addition, subtraction, multiplication, division, modulus and power operations.</p>
-      <span class="card-cta">Open Calculator →</span>
+      <span class="card-cta">Open Calculator -></span>
     </a>
 
   </div>

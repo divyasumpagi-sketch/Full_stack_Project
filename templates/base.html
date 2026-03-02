@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}FullStack Pro{% endblock %}</title>
 
+  <!-- Main CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 
   {% block extra_css %}{% endblock %}
@@ -18,7 +19,7 @@
       transition: all 0.3s ease;
     }
 
-    /* PURPLE BORDER ON HOVER */
+    /* Purple border on hover */
     .auth-btn:hover {
       border: 2px solid #7c3aed;
       color: #7c3aed;
@@ -45,7 +46,7 @@
   <nav class="navbar">
     <a href="{{ url_for('home') }}" class="brand">Full<span>Stack</span>Pro</a>
 
-    <!-- Hamburger -->
+    <!-- Hamburger (mobile) -->
     <div class="hamburger">
       <span></span><span></span><span></span>
     </div>
@@ -56,12 +57,13 @@
       <li><a href="{{ url_for('calculator') }}">🧮 Calculator</a></li>
 
       {% if session.get('user_id') %}
+        <!-- Logged-in links -->
         <li><a href="{{ url_for('dashboard') }}">📊 Dashboard</a></li>
         <li><a href="{{ url_for('students') }}">🎓 Students</a></li>
         <li><a href="{{ url_for('tasks') }}">✅ Tasks</a></li>
         <li><a href="{{ url_for('logout') }}" class="btn-logout">Logout</a></li>
       {% else %}
-        <!-- AUTH BUTTONS -->
+        <!-- Authentication buttons -->
         <li><a href="{{ url_for('register') }}" class="auth-btn">Register</a></li>
         <li><a href="{{ url_for('login') }}" class="auth-btn">Login</a></li>
       {% endif %}
@@ -89,9 +91,12 @@
 
   <!-- ========== FOOTER ========== -->
   <footer>
-    <p><span>FullStackPro</span> | Built by <span>Divya</span> | Python Flask + SQLite</p>
+    <p>
+      <span>FullStackPro</span> | Built by <span>Divya</span> | Python Flask + SQLite
+    </p>
   </footer>
 
+  <!-- JS -->
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
   {% block extra_js %}{% endblock %}
 

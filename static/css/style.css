@@ -235,6 +235,19 @@ footer {
   text-align: center;
 }
 
+/* ===== CONTACT PAGE CENTER ALIGN ===== */
+.contact-section {
+  text-align: center;
+  margin: 2rem auto;
+}
+
+.contact-info {
+  justify-content: center;
+}
+
+.contact-card {
+  text-align: center;
+}
 
 .page-header h1 {
   text-align: center;

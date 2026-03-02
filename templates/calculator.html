@@ -13,7 +13,7 @@
   <!-- ===== CALCULATOR CARD ===== -->
   <div class="calc-card">
 
-    <!-- Result Display Screen -->
+    <!-- Result Display -->
     <div class="calc-screen">
       {% if error %}
         <div class="calc-error">⚠️ {{ error }}</div>
@@ -28,13 +28,12 @@
     <!-- Form -->
     <form method="POST" action="{{ url_for('calculator') }}" id="calcForm">
 
-      <!-- Number Inputs Row -->
       <div class="calc-inputs">
         <div class="calc-input-group">
           <label>First Number</label>
           <input type="number" name="num1" id="num1"
-                 value="{{ num1_val }}"
-                 placeholder="e.g. 10" step="any" required />
+                 value="{{ num1_val }}" placeholder="e.g. 10"
+                 step="any" required />
         </div>
 
         <div class="calc-op-display" id="opDisplay">
@@ -44,80 +43,44 @@
         <div class="calc-input-group">
           <label>Second Number</label>
           <input type="number" name="num2" id="num2"
-                 value="{{ num2_val }}"
-                 placeholder="e.g. 5" step="any" required />
+                 value="{{ num2_val }}" placeholder="e.g. 5"
+                 step="any" required />
         </div>
       </div>
 
-      <!-- Hidden operation field (set by buttons) -->
       <input type="hidden" name="operation" id="operationField" value="{{ op_val }}" />
 
-      <!-- Operation Buttons -->
       <p style="text-align:center; color:#64748b; font-size:0.85rem; margin-bottom:0.8rem;">
         Select an operation:
       </p>
+
       <div class="op-buttons">
         <button type="submit" class="op-btn {% if op_val=='add' %}op-active{% endif %}"
-                onclick="setOp('add', '+')">
-          <span class="op-symbol">+</span>
-          <span class="op-name">Add</span>
-        </button>
+                onclick="setOp('add', '+')">+ Add</button>
+
         <button type="submit" class="op-btn {% if op_val=='subtract' %}op-active{% endif %}"
-                onclick="setOp('subtract', '−')">
-          <span class="op-symbol">−</span>
-          <span class="op-name">Subtract</span>
-        </button>
+                onclick="setOp('subtract', '−')">− Subtract</button>
+
         <button type="submit" class="op-btn {% if op_val=='multiply' %}op-active{% endif %}"
-                onclick="setOp('multiply', '×')">
-          <span class="op-symbol">×</span>
-          <span class="op-name">Multiply</span>
-        </button>
+                onclick="setOp('multiply', '×')">× Multiply</button>
+
         <button type="submit" class="op-btn {% if op_val=='divide' %}op-active{% endif %}"
-                onclick="setOp('divide', '÷')">
-          <span class="op-symbol">÷</span>
-          <span class="op-name">Divide</span>
-        </button>
+                onclick="setOp('divide', '÷')">÷ Divide</button>
+
         <button type="submit" class="op-btn {% if op_val=='modulus' %}op-active{% endif %}"
-                onclick="setOp('modulus', '%')">
-          <span class="op-symbol">%</span>
-          <span class="op-name">Modulus</span>
-        </button>
+                onclick="setOp('modulus', '%')">% Modulus</button>
+
         <button type="submit" class="op-btn {% if op_val=='power' %}op-active{% endif %}"
-                onclick="setOp('power', '^')">
-          <span class="op-symbol">x^y</span>
-          <span class="op-name">Power</span>
-        </button>
+                onclick="setOp('power', '^')">x^y Power</button>
       </div>
 
-      <!-- Clear Button -->
-      <a href="{{ url_for('calculator') }}" class="btn btn-outline" style="width:100%; text-align:center; display:block; margin-top:1rem;">
+      <a href="{{ url_for('calculator') }}"
+         class="btn btn-outline"
+         style="width:100%; text-align:center; display:block; margin-top:1rem;">
         🔄 Clear / Reset
       </a>
 
     </form>
-  </div>
-
-  <!-- ===== OPERATIONS REFERENCE TABLE ===== -->
-  <div class="calc-info">
-    <h3>📖 Operations Reference</h3>
-    <table class="ref-table">
-      <thead>
-        <tr><th>Operation</th><th>Symbol</th><th>Example</th><th>Result</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Addition</td>    <td>+</td>   <td>10 + 3</td>  <td>13</td></tr>
-        <tr><td>Subtraction</td> <td>−</td>   <td>10 − 3</td>  <td>7</td></tr>
-        <tr><td>Multiplication</td><td>×</td> <td>10 × 3</td>  <td>30</td></tr>
-        <tr><td>Division</td>    <td>÷</td>   <td>10 ÷ 3</td>  <td>3.333333</td></tr>
-        <tr><td>Modulus</td>     <td>%</td>   <td>10 % 3</td>  <td>1 (remainder)</td></tr>
-        <tr><td>Power</td>       <td>^</td>   <td>2 ^ 8</td>   <td>256</td></tr>
-      </tbody>
-    </table>
-
-    <div class="calc-tip">
-      💡 <strong>Tip:</strong> Modulus gives the <em>remainder</em> after division.
-      E.g. 10 % 3 = 1 because 10 ÷ 3 = 3 remainder <strong>1</strong>.
-    </div>
   </div>
 
 </div>
@@ -126,190 +89,131 @@
 
 {% block extra_js %}
 <script>
-  // Set the hidden operation field and update the display symbol
-  function setOp(operation, symbol) {
-    document.getElementById("operationField").value = operation;
-    document.getElementById("opDisplay").textContent = symbol;
+function setOp(operation, symbol) {
+  document.getElementById("operationField").value = operation;
+  document.getElementById("opDisplay").textContent = symbol;
+}
 
-    // Highlight the clicked button
-    document.querySelectorAll(".op-btn").forEach(b => b.classList.remove("op-active"));
-    event.currentTarget.classList.add("op-active");
+document.getElementById("calcForm").addEventListener("submit", function(e) {
+  const num1 = document.getElementById("num1").value.trim();
+  const num2 = document.getElementById("num2").value.trim();
+  const op   = document.getElementById("operationField").value;
+
+  if (!num1 || !num2) {
+    e.preventDefault();
+    alert("Please enter both numbers.");
   }
-
-  // Prevent form submit if numbers are empty
-  document.getElementById("calcForm").addEventListener("submit", function(e) {
-    const num1 = document.getElementById("num1").value.trim();
-    const num2 = document.getElementById("num2").value.trim();
-    const op   = document.getElementById("operationField").value;
-
-    if (!num1 || !num2) {
-      e.preventDefault();
-      alert("Please enter both numbers before selecting an operation.");
-      return;
-    }
-    if (!op) {
-      e.preventDefault();
-      alert("Please select an operation by clicking one of the buttons.");
-    }
-  });
+  if (!op) {
+    e.preventDefault();
+    alert("Please select an operation.");
+  }
+});
 </script>
 {% endblock %}
 
 {% block extra_css %}
 <style>
-  /* ===== CALCULATOR PAGE STYLES ===== */
-  .calc-wrapper {
-    max-width: 750px;
-    margin: 2.5rem auto;
-    padding: 0 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
+.calc-wrapper {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
 
-  /* Screen / Result Display */
-  .calc-card {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 25px rgba(79,70,229,0.13);
-    padding: 2rem;
-  }
+.calc-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  padding: 2rem;
+}
 
-  .calc-screen {
-    background: #1e1b4b;
-    border-radius: 12px;
-    padding: 1.5rem 1.8rem;
-    min-height: 90px;
-    margin-bottom: 1.8rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
-    text-align: right;
-  }
+/* WHITE RESULT SCREEN */
+.calc-screen {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  text-align: right;
+}
 
-  .calc-placeholder { color: #64748b; font-size: 0.95rem; }
-  .calc-expression  { color: #94a3b8; font-size: 1rem; margin-bottom: 0.3rem; }
-  .calc-result-big  { color: #06b6d4; font-size: 2.2rem; font-weight: 700; }
-  .calc-error       { color: #f87171; font-size: 1rem; font-weight: 600; }
+.calc-placeholder { color: #64748b; }
+.calc-expression { color: #64748b; }
+.calc-result-big {
+  color: #2563eb;
+  font-size: 2rem;
+  font-weight: 700;
+}
+.calc-error {
+  color: #dc2626;
+  font-weight: 600;
+}
 
-  /* Number Input Row */
+.calc-inputs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.calc-input-group {
+  flex: 1;
+}
+
+.calc-input-group input {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.calc-op-display {
+  width: 45px;
+  height: 45px;
+  background: #2563eb;
+  color: white;
+  border-radius: 50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+}
+
+.op-buttons {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 0.6rem;
+}
+
+.op-btn {
+  background:#f1f5f9;
+  border:1px solid #e2e8f0;
+  border-radius:8px;
+  padding:0.6rem;
+  cursor:pointer;
+}
+
+.op-btn:hover {
+  background:#e2e8f0;
+}
+
+.op-active {
+  background:#2563eb !important;
+  color:white;
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
   .calc-inputs {
-    display: flex;
-    align-items: flex-end;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    flex-direction: column;
   }
 
-  .calc-input-group {
-    flex: 1;
+  .op-buttons {
+    grid-template-columns: repeat(2,1fr);
   }
-
-  .calc-input-group label {
-    display: block;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: #1e1b4b;
-    margin-bottom: 0.4rem;
-  }
-
-  .calc-input-group input {
-    width: 100%;
-    padding: 0.7rem 1rem;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-family: 'Poppins', sans-serif;
-    text-align: center;
-    font-weight: 600;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .calc-input-group input:focus { border-color: #4f46e5; }
 
   .calc-op-display {
-    width: 48px;
-    height: 48px;
-    background: #4f46e5;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    font-weight: 700;
-    flex-shrink: 0;
-    margin-bottom: 2px;
+    align-self:center;
   }
-
-  /* Operation Buttons Grid */
-  .op-buttons {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.8rem;
-  }
-
-  .op-btn {
-    background: #f1f5f9;
-    border: 2px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 0.8rem 0.5rem;
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-    transition: all 0.2s;
-  }
-
-  .op-btn:hover {
-    background: #e0e7ff;
-    border-color: #4f46e5;
-    transform: translateY(-2px);
-  }
-
-  .op-active {
-    background: #4f46e5 !important;
-    border-color: #4f46e5 !important;
-    color: white;
-  }
-
-  .op-symbol { font-size: 1.4rem; font-weight: 700; line-height: 1; }
-  .op-name   { font-size: 0.72rem; font-weight: 500; opacity: 0.8; }
-
-  /* Reference Table */
-  .calc-info {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 25px rgba(79,70,229,0.1);
-    padding: 1.5rem 2rem;
-  }
-
-  .calc-info h3 { color: #1e1b4b; margin-bottom: 1rem; }
-
-  .ref-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-  .ref-table thead { background: #1e1b4b; }
-  .ref-table thead th { color: white; padding: 0.6rem 1rem; text-align: left; }
-  .ref-table tbody tr { border-bottom: 1px solid #e2e8f0; }
-  .ref-table tbody tr:hover { background: #f8fafc; }
-  .ref-table tbody td { padding: 0.6rem 1rem; }
-
-  .calc-tip {
-    margin-top: 1rem;
-    background: #eff6ff;
-    border-left: 4px solid #3b82f6;
-    border-radius: 6px;
-    padding: 0.8rem 1rem;
-    font-size: 0.88rem;
-    color: #1e40af;
-  }
-
-  @media (max-width: 480px) {
-    .op-buttons { grid-template-columns: repeat(2, 1fr); }
-    .calc-inputs { flex-direction: column; align-items: stretch; }
-    .calc-op-display { align-self: center; }
-  }
+}
 </style>
 {% endblock %}

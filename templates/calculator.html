@@ -215,5 +215,33 @@ document.getElementById("calcForm").addEventListener("submit", function(e) {
     align-self:center;
   }
 }
+/* ===== AUTH BUTTONS ===== */
+
+.auth-btn {
+  padding: 0.45rem 1rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color: #cbd5e1;
+  transition: all 0.3s ease;
+}
+
+/* PURPLE BORDER ON HOVER */
+.auth-btn:hover {
+  border: 2px solid #7c3aed;
+  color: #7c3aed;
+  background: transparent;
+}
+
+/* Logout button */
+.btn-logout {
+  background: #dc2626;
+  color: white;
+  padding: 0.45rem 1rem;
+  border-radius: 8px;
+}
+
+.btn-logout:hover {
+  background: #b91c1c;
+}
 </style>
 {% endblock %}

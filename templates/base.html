@@ -5,18 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}FullStack Pro{% endblock %}</title>
 
-  <!-- Link to our CSS file -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 
   {% block extra_css %}{% endblock %}
+
+  <style>
+    /* ===== AUTH BUTTONS ===== */
+    .auth-btn {
+      padding: 0.45rem 1rem;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    /* PURPLE BORDER ON HOVER */
+    .auth-btn:hover {
+      border: 2px solid #7c3aed;
+      color: #7c3aed;
+      background: transparent;
+    }
+
+    /* Logout button */
+    .btn-logout {
+      background: #dc2626;
+      color: white !important;
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+    }
+
+    .btn-logout:hover {
+      background: #b91c1c;
+    }
+  </style>
 </head>
+
 <body>
 
   <!-- ========== NAVBAR ========== -->
   <nav class="navbar">
     <a href="{{ url_for('home') }}" class="brand">Full<span>Stack</span>Pro</a>
 
-    <!-- Hamburger for mobile -->
+    <!-- Hamburger -->
     <div class="hamburger">
       <span></span><span></span><span></span>
     </div>
@@ -27,15 +56,14 @@
       <li><a href="{{ url_for('calculator') }}">🧮 Calculator</a></li>
 
       {% if session.get('user_id') %}
-        <!-- Logged-in links -->
         <li><a href="{{ url_for('dashboard') }}">📊 Dashboard</a></li>
         <li><a href="{{ url_for('students') }}">🎓 Students</a></li>
         <li><a href="{{ url_for('tasks') }}">✅ Tasks</a></li>
         <li><a href="{{ url_for('logout') }}" class="btn-logout">Logout</a></li>
       {% else %}
-        <!-- Guest links -->
-        <li><a href="{{ url_for('register') }}">Register</a></li>
-        <li><a href="{{ url_for('login') }}">Login</a></li>
+        <!-- AUTH BUTTONS -->
+        <li><a href="{{ url_for('register') }}" class="auth-btn">Register</a></li>
+        <li><a href="{{ url_for('login') }}" class="auth-btn">Login</a></li>
       {% endif %}
     </ul>
   </nav>
@@ -61,10 +89,9 @@
 
   <!-- ========== FOOTER ========== -->
   <footer>
-    <p> <span>FullStackPro</span> &nbsp;|&nbsp; Built by <span>Divya</span> &nbsp;|&nbsp; Python Flask + SQLite</p>
+    <p><span>FullStackPro</span> | Built by <span>Divya</span> | Python Flask + SQLite</p>
   </footer>
 
-  <!-- Link to our JS file (at bottom so HTML loads first) -->
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
   {% block extra_js %}{% endblock %}
 
